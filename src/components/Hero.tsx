@@ -2,6 +2,9 @@ import { ArrowDown, BarChart2, Target, Lightbulb, Zap } from "lucide-react";
 import { mapStats } from "../data/strategicMap";
 import { motion } from "framer-motion";
 import logoCNI from "../assets/cnilogo.png";
+import { MovingBorderButton } from "./ui/moving-border";
+
+import SplashCursor from "./ui/SplashCursor";
 
 const stats = [
   {
@@ -55,12 +58,33 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center text-white overflow-hidden"
+      className="
+    relative
+    min-h-screen
+    flex
+    flex-col
+    items-center
+    justify-center
+    overflow-hidden
+    text-white
+  "
       style={{
         background:
           "linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #0c1a2e 100%)",
       }}
     >
+      <SplashCursor
+        DENSITY_DISSIPATION={3.5}
+        VELOCITY_DISSIPATION={2}
+        PRESSURE={0.1}
+        CURL={3}
+        SPLAT_RADIUS={0.2}
+        SPLAT_FORCE={6000}
+        COLOR_UPDATE_SPEED={10}
+        SHADING
+        RAINBOW_MODE={false}
+        COLOR="#38bdf8"
+      />
       <div
         className="absolute inset-0 opacity-10"
         style={{
@@ -89,15 +113,40 @@ export default function Hero() {
           variants={item}
           className="flex flex-col items-center gap-3 mb-8"
         >
-          <div className="inline-flex items-center gap-2 bg-blue-300/80 border border-blue-500/90 rounded-full px-4 py-2 text-blue-900 text-sm font-medium">
-            <span className="w-2 h-2 bg-blue-800 rounded-full animate-pulse" />
-            <img
-              src={logoCNI}
-              alt="CNI"
-              className="w-8 md:w-14 lg:w-14 h-auto object-contain drop-shadow-md"
-            />{" "}
-            Confederação Nacional da Indústria
-          </div>
+          <MovingBorderButton
+            duration={3500}
+            borderRadius="999px"
+            containerClassName="
+    h-14
+    w-fit
+  "
+            className="
+    px-6
+    h-full
+    rounded-full
+
+    bg-slate-900/80
+    backdrop-blur-xl
+
+    border-white/20
+
+    shadow-[0_0_40px_rgba(59,130,246,0.25)]
+  "
+          >
+            <div className="flex items-center gap-3 text-sm font-medium text-white">
+              <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
+
+              <img
+                src={logoCNI}
+                alt="CNI"
+                className="w-8 md:w-12 h-auto object-contain drop-shadow-md"
+              />
+
+              <span className="text-slate-200">
+                Confederação Nacional da Indústria
+              </span>
+            </div>
+          </MovingBorderButton>
         </motion.div>
         <motion.h1
           variants={item}
