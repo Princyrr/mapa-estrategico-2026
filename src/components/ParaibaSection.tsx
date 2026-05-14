@@ -1,6 +1,7 @@
 import { paraibaSummary } from "../data/strategicMap";
-import { MapPin, ArrowRight } from "lucide-react";
+import { MapPin, Lightbulb, Target, Users, Workflow } from "lucide-react";
 import { motion } from "framer-motion";
+import Stack from "./ui/stack";
 
 const factorColors: Record<string, string> = {
   "Ambiente de Negócios": "#0e7490",
@@ -18,6 +19,7 @@ const container = {
   show: {
     transition: {
       staggerChildren: 0.12,
+
       delayChildren: 0.1,
     },
   },
@@ -85,7 +87,7 @@ export default function ParaibaSection() {
         {/* GRID */}
         <motion.div variants={container} className="grid lg:grid-cols-3 gap-8">
           {/* COLUNA ESQUERDA */}
-          <motion.div variants={item} className="space-y-6">
+          <motion.div variants={item} className="flex flex-col gap-6 h-full">
             <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-6 text-center">
               <div className="text-5xl font-bold text-amber-400 mb-2">
                 {paraibaSummary.totalInitiatives}
@@ -98,23 +100,93 @@ export default function ParaibaSection() {
               </div>
             </div>
 
-            <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6 space-y-4">
-              <h3 className="text-white font-semibold">Como foi construído</h3>
+            <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6">
+              <h3 className="text-white font-semibold mb-6">
+                Como foi construído
+              </h3>
 
-              {[
-                "Oficinas técnicas nos temas relacionados aos fatores-chave",
-                "Temas como ambiente econômico, baixo carbono e educação",
-                "Entrevistas com lideranças locais",
-                "Identificação de ações da FIEMA alinhadas às metas estratégicas",
-              ].map((itemText) => (
-                <div key={itemText} className="flex items-start gap-3">
-                  <ArrowRight
-                    size={14}
-                    className="text-amber-400 mt-1 shrink-0"
-                  />
-                  <span className="text-slate-400 text-sm">{itemText}</span>
-                </div>
-              ))}
+              <div className="h-[340px]">
+                <Stack
+                  randomRotation={false}
+                  autoplay
+                  autoplayDelay={3000}
+                  sensitivity={120}
+                  sendToBackOnClick
+                  cards={[
+                    {
+                      icon: Workflow,
+                      title: "04 - Alinhamento Estratégico",
+                      text: "Identificação de ações da FIEMA alinhadas às metas estratégicas",
+                    },
+                    {
+                      icon: Users,
+                      title: "03 - Lideranças Locais",
+                      text: "Esse esforço colaborativo incluiu entrevistas com lideranças locais.",
+                    },
+                    {
+                      icon: Target,
+                      title: "02 - Temas Estratégicos",
+                      text: "Temas como ambiente econômico, baixo carbono e educação.",
+                    },
+                    {
+                      icon: Lightbulb,
+                      title: "01 - Oficinas Técnicas",
+                      text: "Oficinas técnicas nos temas relacionados aos fatores-chave do Mapa Estratégico.",
+                    },
+                  ].map((card, index) => (
+                    <div
+                      key={index}
+                      className="
+            h-full
+            w-full
+            rounded-3xl
+            border
+            border-slate-700/50
+            bg-gradient-to-br
+            from-slate-800
+            to-slate-900
+            p-6
+            shadow-2xl
+            relative
+            overflow-hidden
+          "
+                    >
+                      <div className="flex h-full flex-col justify-between">
+                        <div>
+                          <div className="flex items-center gap-2 text-amber-400 text-sm font-medium mb-4">
+                            {(() => {
+                              const Icon = card.icon;
+                              return <Icon size={16} />;
+                            })()}
+                            <span>Etapa estratégica</span>
+                          </div>
+
+                          <h4 className="text-white text-xl font-bold mb-4">
+                            {card.title}
+                          </h4>
+
+                          <p className="text-slate-400 text-sm leading-relaxed">
+                            {card.text}
+                          </p>
+                        </div>
+
+                        <div className="absolute right-6 bottom-6 opacity-10">
+                          <card.icon size={120} />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                />
+              </div>
+
+              <div className="mt-5 flex items-center justify-center gap-2 text-xs text-slate-400">
+                <span className="inline-flex h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
+
+                <span>
+                  Clique nos cards ou arraste com o mouse para explorar as
+                  etapas
+                </span>
+              </div>
             </div>
           </motion.div>
 
