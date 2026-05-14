@@ -59,7 +59,6 @@ const pillars = [
   },
 ];
 
-// container com stagger
 const container = {
   hidden: {},
   show: {
@@ -69,7 +68,6 @@ const container = {
   },
 };
 
-// animação padrão
 const item = {
   hidden: { opacity: 0, y: 60 },
   show: {
@@ -90,11 +88,14 @@ export default function Vision2032() {
         variants={container}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{
+          once: false,
+          amount: 0.2,
+        }}
       >
         {/* HEADER */}
         <motion.div variants={item} className="text-center mb-4">
-          <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-4 py-2 text-emerald-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-4 py-2 text-emerald-400 text-sm font-medium mb-6 mt-6">
             Horizonte Estratégico
           </div>
 
@@ -125,10 +126,13 @@ export default function Vision2032() {
           className="w-full max-w-4xl mx-auto scale-90 origin-top"
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            viewport={{
+              once: false,
+              amount: 0.3,
+            }}
           >
             <RoadmapInfographic />
           </motion.div>
@@ -161,7 +165,6 @@ export default function Vision2032() {
           ))}
         </motion.div>
 
-        {/* BLOCO FINAL */}
         <motion.div
           variants={item}
           className="bg-slate-800/50 border border-slate-700/50 rounded-3xl p-8 md:p-12"

@@ -13,25 +13,29 @@ const factorColors: Record<string, string> = {
   Infraestrutura: "#92400e",
 };
 
-// animação container (stagger)
 const container = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
     },
   },
 };
 
-// animação padrão dos itens (fade + slide)
 const item = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: {
+    opacity: 0,
+    y: 24,
+    filter: "blur(8px)",
+  },
   show: {
     opacity: 1,
     y: 0,
+    filter: "blur(0px)",
     transition: {
       duration: 0.7,
-      ease: "easeOut" as const,
+      ease: [0.22, 1, 0.36, 1],
     },
   },
 };
@@ -45,12 +49,15 @@ export default function ParaibaSection() {
         variants={container}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{
+          once: false,
+          amount: 0.25,
+        }}
         className="max-w-7xl mx-auto"
       >
         {/* HEADER */}
         <motion.div variants={item} className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-full px-4 py-2 text-amber-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-full px-4 py-2 text-amber-400 text-sm font-medium mb-6 mt-6">
             <MapPin size={14} />
             Regionalização do Mapa
           </div>
@@ -76,7 +83,7 @@ export default function ParaibaSection() {
         </motion.div>
 
         {/* GRID */}
-        <div className="grid lg:grid-cols-3 gap-8">
+        <motion.div variants={container} className="grid lg:grid-cols-3 gap-8">
           {/* COLUNA ESQUERDA */}
           <motion.div variants={item} className="space-y-6">
             <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-6 text-center">
@@ -128,7 +135,7 @@ export default function ParaibaSection() {
                   const color = factorColors[itemData.factor] ?? "#3b82f6";
 
                   return (
-                    <div key={itemData.factor}>
+                    <motion.div key={itemData.factor} variants={item}>
                       <div className="flex items-center justify-between mb-1.5">
                         <span className="text-slate-300 text-sm font-medium leading-tight max-w-xs">
                           {itemData.factor}
@@ -152,12 +159,12 @@ export default function ParaibaSection() {
                           style={{ backgroundColor: color }}
                         />
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 })}
             </div>
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* BLOCO FINAL */}
         <motion.div

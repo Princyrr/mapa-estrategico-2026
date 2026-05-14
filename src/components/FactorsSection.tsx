@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import Mandala from "./Mandala";
 import FactorDetail from "./FactorDetail";
 import { factors } from "../data/strategicMap";
@@ -36,12 +37,48 @@ export default function FactorsSection() {
     setSelectedId((prev) => (prev === id ? null : id));
   };
 
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const item = {
+    hidden: {
+      opacity: 0,
+      y: 24,
+      filter: "blur(8px)",
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
   return (
     <section id="fatores" className="bg-slate-900  py-24 px-6">
-      <div className="max-w-7xl mx-auto">
+      <motion.div
+        className="max-w-7xl mx-auto"
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{
+          once: false,
+          amount: 0.15,
+        }}
+      >
         {/* HEADER */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 text-blue-400 text-sm font-medium mb-6">
+        <motion.div variants={item} className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 text-blue-400 text-sm font-medium mb-6 mt-6">
             Estrutura Estratégica
           </div>
 
@@ -61,12 +98,18 @@ export default function FactorsSection() {
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
             Clique em um setor para explorar os temas prioritários.
           </p>
-        </div>
+        </motion.div>
 
         {/* GRID */}
-        <div className="grid lg:grid-cols-2 gap-8 items-stretch">
+        <motion.div
+          variants={container}
+          className="grid lg:grid-cols-2 gap-8 items-stretch"
+        >
           {/* MANDALA */}
-          <div className="rounded-3xl p-8 flex flex-col items-center justify-center">
+          <motion.div
+            variants={item}
+            className="rounded-3xl p-8 flex flex-col items-center justify-center"
+          >
             <Mandala
               activeId={displayId}
               onHover={setHoveredId}
@@ -76,10 +119,13 @@ export default function FactorsSection() {
             <p className="text-slate-600 text-xs mt-4 text-center">
               Passe o mouse ou clique nos setores para explorar
             </p>
-          </div>
+          </motion.div>
 
           {/* DETAIL PANEL */}
-          <div className="bg-slate-900/60 border border-slate-800 rounded-3xl min-h-[500px] flex flex-col">
+          <motion.div
+            variants={item}
+            className="bg-slate-900/60 border border-slate-800 rounded-3xl min-h-[500px] flex flex-col"
+          >
             <div className="border-b border-slate-800 px-6 py-4">
               <h3 className="text-slate-400 text-sm font-medium">
                 {subitem
@@ -93,11 +139,14 @@ export default function FactorsSection() {
             <div className="flex-1 overflow-hidden">
               <FactorDetail factor={factor} subitem={subitem} />
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* CHIPS */}
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
+        <motion.div
+          variants={container}
+          className="mt-10 flex flex-wrap justify-center gap-3"
+        >
           {factors.map((factorItem) => {
             const isActive = selectedId === factorItem.id;
 
@@ -130,8 +179,8 @@ export default function FactorsSection() {
               </button>
             );
           })}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
