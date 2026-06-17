@@ -1,15 +1,34 @@
-import { ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
-import { useState } from "react";
+import {
+  ChevronDown,
+  ChevronUp,
+  CheckCircle,
+  MessageSquareQuote,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 import type { Factor, SubItem, Objective } from "../data/strategicMap";
+import { API_URL } from "../config";
+
+/* ---------------- TYPES ---------------- */
+
+interface InitiativeStatus {
+  initiativeId: string;
+  completed: boolean;
+  observation?: string;
+  link?: string;
+}
 
 /* ---------------- OBJECTIVE ---------------- */
 
 interface ObjectiveCardProps {
   objective: Objective;
   color: string;
+  completedMap: Record<
+    string,
+    { completed: boolean; observation: string; link?: string }
+  >;
 }
 
-function ObjectiveCard({ objective, color }: ObjectiveCardProps) {
+function ObjectiveCard({ objective, color, completedMap }: ObjectiveCardProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -49,17 +68,72 @@ function ObjectiveCard({ objective, color }: ObjectiveCardProps) {
           </div>
 
           <ul className="space-y-2">
-            {objective.initiatives?.map((initiative) => (
-              <li key={initiative} className="text-slate-300 text-sm">
-                <div className="flex gap-2 items-start">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0"
-                    style={{ backgroundColor: color }}
-                  />
-                  <span className="leading-relaxed">{initiative}</span>
-                </div>
-              </li>
-            ))}
+            {objective.initiatives?.map((initiative) => {
+              const done = completedMap[initiative.id]?.completed;
+
+              return (
+                <li key={initiative.id} className="text-slate-300 text-sm">
+                  <div className="flex items-start gap-3 group">
+                    <div
+                      className={`
+                        w-[18px] h-[18px] mt-1 flex items-center justify-center
+                        rounded-md border shrink-0 transition-all
+                        ${
+                          done
+                            ? "bg-emerald-500 border-emerald-400"
+                            : "border-white/25 bg-white/5"
+                        }
+                      `}
+                    >
+                      {done && <CheckCircle size={12} className="text-white" />}
+                    </div>
+
+                    <div className="flex flex-col flex-1 min-w-0">
+                      <span className="leading-relaxed text-slate-300 group-hover:text-white transition">
+                        {initiative.title}
+                      </span>
+
+                      {completedMap[initiative.id]?.observation?.trim() && (
+                        <div
+                          className="mt-2 w-full min-h-[100px] rounded-xl border p-4 text-xs shadow-sm backdrop-blur-sm flex flex-col"
+                          style={{
+                            borderColor: `${color}40`,
+                            backgroundColor: `${color}10`,
+                          }}
+                        >
+                          <div
+                            className="flex items-center gap-1 mb-1 font-semibold"
+                            style={{ color }}
+                          >
+                            <MessageSquareQuote size={12} />
+                            <span>Observação:</span>
+                          </div>
+
+                          <p className="text-slate-300 leading-relaxed">
+                            {completedMap[initiative.id].observation}
+                          </p>
+                          {completedMap[initiative.id]?.link?.trim() && (
+                            <a
+                              href={completedMap[initiative.id].link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-2 ml-auto flex w-fit items-center gap-2 px-3 py-1 rounded-md text-xs font-semibold transition hover:opacity-80"
+                              style={{
+                                backgroundColor: `${color}15`,
+                                color: color,
+                                border: `1px solid ${color}40`,
+                              }}
+                            >
+                              📁 Arquivos
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}
@@ -72,9 +146,13 @@ function ObjectiveCard({ objective, color }: ObjectiveCardProps) {
 interface SubItemCardProps {
   subitem: SubItem;
   color: string;
+  completedMap: Record<
+    string,
+    { completed: boolean; observation: string; link?: string }
+  >;
 }
 
-function SubItemCard({ subitem, color }: SubItemCardProps) {
+function SubItemCard({ subitem, color, completedMap }: SubItemCardProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -113,6 +191,7 @@ function SubItemCard({ subitem, color }: SubItemCardProps) {
               key={objective.title}
               objective={objective}
               color={color}
+              completedMap={completedMap}
             />
           ))}
         </div>
@@ -129,6 +208,40 @@ interface FactorDetailProps {
 }
 
 export default function FactorDetail({ factor, subitem }: FactorDetailProps) {
+  const [completedMap, setCompletedMap] = useState<
+    Record<string, { completed: boolean; observation: string; link?: string }>
+  >({});
+
+  useEffect(() => {
+    const fetchData = () => {
+      fetch(`${API_URL}/api/initiatives`)
+        .then((res) => res.json())
+        .then((data: InitiativeStatus[]) => {
+          const map: Record<
+            string,
+            { completed: boolean; observation: string; link?: string }
+          > = {};
+          data.forEach((item) => {
+            map[item.initiativeId] = {
+              completed: item.completed,
+              observation: item.observation || "",
+              link: item.link || "",
+            };
+          });
+
+          setCompletedMap(map);
+        });
+    };
+
+    fetchData();
+
+    const onFocus = () => fetchData();
+
+    window.addEventListener("focus", onFocus);
+
+    return () => window.removeEventListener("focus", onFocus);
+  }, []);
+
   if (!factor && !subitem) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-center py-16 px-6">
@@ -143,8 +256,6 @@ export default function FactorDetail({ factor, subitem }: FactorDetailProps) {
       </div>
     );
   }
-
-  /* ---------------- SUBITEM VIEW ---------------- */
 
   if (subitem && factor) {
     return (
@@ -166,14 +277,13 @@ export default function FactorDetail({ factor, subitem }: FactorDetailProps) {
               key={objective.title}
               objective={objective}
               color={factor.color}
+              completedMap={completedMap}
             />
           ))}
         </div>
       </div>
     );
   }
-
-  /* ---------------- FACTOR VIEW ---------------- */
 
   if (factor) {
     return (
@@ -195,16 +305,15 @@ export default function FactorDetail({ factor, subitem }: FactorDetailProps) {
           </p>
         </div>
 
-        <div>
-          <p className="text-slate-500 text-xs uppercase tracking-widest font-semibold mb-3">
-            Subtemas Estratégicos
-          </p>
-
-          <div className="space-y-3">
-            {factor.subitems.map((sub) => (
-              <SubItemCard key={sub.id} subitem={sub} color={factor.color} />
-            ))}
-          </div>
+        <div className="space-y-3">
+          {factor.subitems.map((sub) => (
+            <SubItemCard
+              key={sub.id}
+              subitem={sub}
+              color={factor.color}
+              completedMap={completedMap}
+            />
+          ))}
         </div>
       </div>
     );

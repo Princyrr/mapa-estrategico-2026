@@ -67,7 +67,7 @@ export default function FactorsSection() {
   return (
     <section id="fatores" className="bg-slate-900  py-24 px-6">
       <motion.div
-        className="max-w-7xl mx-auto"
+        className="max-w-[1600px] mx-auto"
         variants={container}
         initial="hidden"
         whileInView="show"

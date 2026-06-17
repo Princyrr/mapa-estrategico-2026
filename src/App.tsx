@@ -1,19 +1,27 @@
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Vision2032 from "./components/Vision2032";
-import FactorsSection from "./components/FactorsSection";
-import ParaibaSection from "./components/ParaibaSection";
-import Footer from "./components/Footer";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import HomePage from "./pages/HomePage";
+import AdminPage from "./pages/AdminPage";
+import LoginPage from "./pages/LoginPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-slate-950 text-white ">
-      <Navbar />
-      <Hero />
-      <Vision2032 />
-      <FactorsSection />
-      <ParaibaSection />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+
+        <Route path="/login" element={<LoginPage />} />
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminPage />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
