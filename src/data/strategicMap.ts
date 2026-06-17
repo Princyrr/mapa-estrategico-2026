@@ -29,8 +29,8 @@ export const factors: Factor[] = [
   {
     id: "ambiente-negocios",
     label: "1 AMBIENTE DE NEGÓCIOS",
-    color: "#6B7280",
-    lightColor: "#D1D5DB",
+    color: "#2563EB",
+    lightColor: "#93C5FD",
     icon: "🤝",
     description:
       "Promover um ambiente de negócios que favoreça o crescimento econômico e o desenvolvimento sustentável passa pela garantia de instituições – incluindo segurança pública e defesa do Estado – regramentos estáveis, transparentes e previsíveis, bem como pela capacidade de formulação de instrumentos eficientes para resolução de conflitos.",
@@ -557,8 +557,8 @@ export const factors: Factor[] = [
   {
     id: "baixo-carbono",
     label: "3 BAIXO CARBONO E RECURSOS NATURAIS",
-    color: "#6B9BC3",
-    lightColor: "#C3DCF0",
+    color: "#6c4BC3",
+    lightColor: "#DDD6FE",
     icon: "♻️",
     description:
       "A transição para uma economia de baixo carbono, baseada na redução de emissões de gases de efeito estufa (GEE) e no uso eficiente de recursos naturais, é fator essencial para o posicionamento da indústria brasileira como liderança na agenda nacional e global de sustentabilidade.",

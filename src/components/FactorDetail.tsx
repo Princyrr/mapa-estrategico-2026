@@ -75,15 +75,22 @@ function ObjectiveCard({ objective, color, completedMap }: ObjectiveCardProps) {
                 <li key={initiative.id} className="text-slate-300 text-sm">
                   <div className="flex items-start gap-3 group">
                     <div
-                      className={`
-                        w-[18px] h-[18px] mt-1 flex items-center justify-center
-                        rounded-md border shrink-0 transition-all
-                        ${
-                          done
-                            ? "bg-emerald-500 border-emerald-400"
-                            : "border-white/25 bg-white/5"
-                        }
-                      `}
+                      className="
+    w-[18px] h-[18px] mt-1 flex items-center justify-center
+    rounded-md border shrink-0 transition-all
+  "
+                      style={
+                        done
+                          ? {
+                              backgroundColor: color,
+                              borderColor: color,
+                              boxShadow: `0 0 8px ${color}`,
+                            }
+                          : {
+                              borderColor: "rgba(255,255,255,0.25)",
+                              backgroundColor: "rgba(255,255,255,0.05)",
+                            }
+                      }
                     >
                       {done && <CheckCircle size={12} className="text-white" />}
                     </div>
@@ -97,13 +104,17 @@ function ObjectiveCard({ objective, color, completedMap }: ObjectiveCardProps) {
                         <div
                           className="mt-2 w-full min-h-[100px] rounded-xl border p-4 text-xs shadow-sm backdrop-blur-sm flex flex-col"
                           style={{
-                            borderColor: `${color}40`,
+                            borderColor: `${color}90`,
                             backgroundColor: `${color}10`,
                           }}
                         >
                           <div
                             className="flex items-center gap-1 mb-1 font-semibold"
-                            style={{ color }}
+                            style={{
+                              color,
+                              filter: "brightness(1.8)",
+                              textShadow: `0 0 6px ${color}`,
+                            }}
                           >
                             <MessageSquareQuote size={12} />
                             <span>Observação:</span>
@@ -120,8 +131,10 @@ function ObjectiveCard({ objective, color, completedMap }: ObjectiveCardProps) {
                               className="mt-2 ml-auto flex w-fit items-center gap-2 px-3 py-1 rounded-md text-xs font-semibold transition hover:opacity-80"
                               style={{
                                 backgroundColor: `${color}15`,
-                                color: color,
+                                color,
                                 border: `1px solid ${color}40`,
+                                filter: "brightness(1.8)",
+                                textShadow: `0 0 6px ${color}`,
                               }}
                             >
                               📁 Arquivos
