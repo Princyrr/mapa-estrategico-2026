@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Settings } from "lucide-react";
 
 import logoFiepb from "../assets/logosistemas.png";
 
@@ -44,6 +44,7 @@ export default function Navbar() {
           </div>
         </a>
 
+        {/* DESKTOP NAV */}
         <nav className="hidden md:flex items-center gap-2">
           {navLinks.map((link) => (
             <a
@@ -62,19 +63,32 @@ export default function Navbar() {
 
           <a
             href="https://projetoagendaestrategica-teste.netlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="
-              ml-2 px-5 py-2 rounded-xl text-sm font-semibold text-white
-              bg-blue-600
-              hover:from-emerald-400 hover:to-blue-400
-              shadow-md hover:shadow-emerald-500/20
-              transition-all duration-300
-            "
+    ml-2 px-5 py-2 rounded-xl text-sm font-semibold text-white
+    bg-blue-600
+    hover:from-emerald-400 hover:to-blue-400
+    shadow-md hover:shadow-emerald-500/20
+    transition-all duration-300
+  "
           >
             Agenda Estratégica
           </a>
+
+          {/* 🔐 BOTÃO ADMIN  */}
+          <button
+            onClick={() =>
+              window.open("/login", "_blank", "noopener,noreferrer")
+            }
+            className="ml-2 p-2 rounded-lg text-slate-500 hover:text-white hover:bg-white/5 transition"
+            title="Admin"
+          >
+            <Settings size={18} />
+          </button>
         </nav>
 
-        {/* MOBILE */}
+        {/* MOBILE BUTTON */}
         <button
           className="md:hidden text-white p-2 rounded-lg hover:bg-white/5 transition"
           onClick={() => setOpen(!open)}
@@ -84,6 +98,7 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* MOBILE MENU */}
       <div
         className={`
           md:hidden overflow-hidden transition-all duration-300
@@ -112,13 +127,30 @@ export default function Navbar() {
 
           <a
             href="https://projetoagendaestrategica-teste.netlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="
-              mt-2 px-4 py-3 rounded-xl text-center font-semibold text-white
-              bg-gradient-to-r from-emerald-500 to-blue-500
-            "
+    ml-2 px-5 py-2 rounded-xl text-sm font-semibold text-white
+    bg-blue-600
+    hover:from-emerald-400 hover:to-blue-400
+    shadow-md hover:shadow-emerald-500/20
+    transition-all duration-300
+  "
           >
             Agenda Estratégica
           </a>
+
+          {/* 🔐 BOTÃO ADMIN  */}
+          <button
+            onClick={() =>
+              window.open("/login", "_blank", "noopener,noreferrer")
+            }
+            className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition"
+            title="Admin"
+          >
+            <Settings size={18} />
+            <span className="text-sm font-medium">Admin</span>
+          </button>
         </div>
       </div>
     </header>

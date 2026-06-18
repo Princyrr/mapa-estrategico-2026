@@ -2079,7 +2079,7 @@ export const mapStats = {
   factors: 8,
   priorityThemes: 32,
   objectives: 96,
-  initiatives: 342,
+  initiatives: 247,
 };
 
 export const paraibaSummary = {
