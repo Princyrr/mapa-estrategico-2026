@@ -2,6 +2,7 @@ import { useState } from "react";
 import { API_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { LockKeyhole, User, ShieldCheck } from "lucide-react";
+import SplashCursor from "../components/ui/SplashCursor";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -46,6 +47,18 @@ export default function LoginPage() {
           "linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #0c1a2e 100%)",
       }}
     >
+      <SplashCursor
+        DENSITY_DISSIPATION={3.5}
+        VELOCITY_DISSIPATION={2}
+        PRESSURE={0.1}
+        CURL={3}
+        SPLAT_RADIUS={0.2}
+        SPLAT_FORCE={6000}
+        COLOR_UPDATE_SPEED={10}
+        SHADING
+        RAINBOW_MODE={false}
+        COLOR="#38bdf8"
+      />
       {/* GRID igual HERO */}
       <div
         className="absolute inset-0 opacity-[0.08]"
