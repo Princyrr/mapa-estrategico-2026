@@ -3,6 +3,7 @@ import { factors } from "../data/strategicMap";
 import { ChevronDown, ChevronRight, Check } from "lucide-react";
 import { API_URL } from "../config";
 import { useNavigate } from "react-router-dom";
+import banner1 from "../assets/banner1.gif";
 
 interface InitiativeStatus {
   initiativeId: string;
@@ -137,294 +138,629 @@ export default function AdminPage() {
       : 0;
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
-        <h1 className="text-2xl md:text-4xl font-bold text-slate-400">
-          Painel
-        </h1>
+    <div className="min-h-screen bg-[#030712] text-white">
+      <div className="max-w-7xl mx-auto px-4 py-5 sm:px-6 md:px-8 xl:px-10">
+        {/* HEADER */}
+        <div className="mb-12 relative">
+          <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 xl:gap-10">
+            {/* TITULOS */}
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/20 bg-cyan-500/10 backdrop-blur-xl mb-5">
+                <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
 
-        <button
-          onClick={handleLogout}
-          className="text-xs px-3 py-1 rounded-md border border-slate-600 text-slate-400 hover:text-white hover:border-slate-400 transition"
-        >
-          Sair
-        </button>
-      </div>
+                <span className="text-xs uppercase tracking-[0.25em] text-cyan-200 font-semibold">
+                  Mapa Estratégico Dashboard
+                </span>
+              </div>
 
-      {/* Mini Painel */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8">
-        {/* TOTAL REAL */}
-        <div className="p-3 md:p-4 rounded-xl  bg-slate-700 border">
-          <p className="text-xs md:text-sm text-slate-300">
-            Total de iniciativas
-          </p>
-          <p className="text-xl md:text-2xl font-bold text-white">
-            {totalInitiatives}
-          </p>
-        </div>
-
-        {/* CONCLUÍDAS */}
-        <div className="p-3 md:p-4 rounded-xl  bg-emerald-50 border border-emerald-200">
-          <p className="text-xs md:text-sm text-emerald-600">Com evidência</p>
-          <p className="text-xl md:text-2xl font-bold text-emerald-700">
-            {completedCount}
-          </p>
-        </div>
-
-        {/* FALTANTES */}
-        <div className="p-3 md:p-4 rounded-xl  bg-amber-50 border border-amber-200">
-          <p className="text-xs md:text-sm text-amber-600">Faltantes</p>
-          <p className="text-xl md:text-2xl font-bold text-amber-700">
-            {missingCount}
-          </p>
-        </div>
-
-        {/* % PROGRESSO */}
-        <div className="p-3 md:p-4 rounded-xl  bg-blue-50 border border-blue-200">
-          <p className="text-xs md:text-sm text-blue-600">Progresso</p>
-          <p className="text-xl md:text-2xl font-bold text-blue-700">
-            {progress}%
-          </p>
-        </div>
-      </div>
-      <div className="space-y-4">
-        {factors.map((factor) => {
-          const isOpen = openFactor === factor.id;
-          const stats = getFactorStats(factor.id);
-          return (
-            <div
-              key={factor.id}
-              className="rounded-xl border shadow-sm overflow-hidden transition-all"
-              style={{ borderColor: `${factor.color}30` }}
-            >
-              {/* FACTOR */}
-              <button
-                onClick={() => setOpenFactor(isOpen ? null : factor.id)}
-                className="w-full flex items-center justify-between p-4 md:p-5 transition"
-                style={{ backgroundColor: `${factor.color}10` }}
+              <h1
+                className="
+text-4xl
+sm:text-5xl
+md:text-6xl
+xl:text-7xl
+font-black
+leading-none
+tracking-tight
+bg-gradient-to-r
+from-blue-600
+via-cyan-500
+to-blue-500
+bg-clip-text
+text-transparent
+"
               >
-                <div
-                  className="grid grid-cols-[auto_1fr_auto] items-center gap-2 font-semibold text-sm md:text-base w-full"
-                  style={{ color: factor.color }}
-                >
-                  <span className="w-5 text-center">{factor.icon}</span>
-                  <span className="truncate">{factor.label}</span>
+                Painel
+                <br />
+                Administrativo
+              </h1>
+            </div>
 
-                  <span className="text-xs px-2 py-1 rounded-full bg-white/70 whitespace-nowrap">
-                    {stats.done}/{stats.total}
-                  </span>
-                </div>
-
-                {isOpen ? (
-                  <ChevronDown size={18} style={{ color: factor.color }} />
-                ) : (
-                  <ChevronRight size={18} style={{ color: factor.color }} />
-                )}
+            {/* BOTÃO */}
+            <div>
+              <button
+                onClick={handleLogout}
+                className="
+w-full sm:w-auto
+px-5 py-3
+rounded-2xl
+bg-white/5
+backdrop-blur-2xl
+border border-white/10
+text-slate-200
+hover:bg-red-500/20
+hover:border-red-400/40
+hover:text-white
+transition-all duration-300
+shadow-2xl shadow-black/40
+font-medium
+"
+              >
+                Sair do painel
               </button>
+            </div>
+            <img
+              src={banner1}
+              alt="Banner"
+              className="
+hidden lg:block
 
-              {/* SUBITEMS */}
-              {isOpen && (
-                <div className="p-3 md:p-5 space-y-3 md:space-y-4 bg-white">
-                  {factor.subitems.map((sub) => {
-                    const subOpen = openSub === sub.id;
+absolute
+top-[40px]
+right-[200px]
 
-                    return (
-                      <div
-                        key={sub.id}
-                        className="border rounded-lg overflow-hidden"
-                        style={{ borderColor: `${factor.color}25` }}
-                      >
-                        {/* SUB HEADER */}
-                        <button
-                          onClick={() => setOpenSub(subOpen ? null : sub.id)}
-                          className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition"
+w-[180px]
+sm:w-[240px]
+xl:w-[300px]
+
+object-contain
+pointer-events-none
+select-none
+
+drop-shadow-[0_0_50px_rgba(34,211,238,0.35)]
+
+z-20
+"
+            />
+          </div>
+        </div>
+
+        {/* CONTAINER MINI PAINEL */}
+        <div
+          className="
+relative
+mb-14
+p-4 sm:p-6 md:p-8
+rounded-[32px]
+border border-white/10
+bg-white/[0.04]
+backdrop-blur-2xl
+shadow-[0_0_80px_rgba(0,0,0,0.45)]
+overflow-hidden
+"
+        >
+          {/* EFEITOS */}
+          <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-cyan-500/10 blur-3xl rounded-full pointer-events-none" />
+
+          <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-violet-500/10 blur-3xl rounded-full pointer-events-none" />
+
+          {/* TOPO */}
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-white">
+                Visão Geral
+              </h2>
+
+              <p className="text-slate-400 mt-2 text-sm">
+                Indicadores estratégicos e progresso geral do painel.
+              </p>
+            </div>
+
+            <div className="px-4 py-2 rounded-2xl bg-cyan-500/10 border border-cyan-400/20 backdrop-blur-xl">
+              <span className="text-cyan-200 text-sm font-medium">
+                {progress}% de progresso geral
+              </span>
+            </div>
+          </div>
+
+          {/* MINI PAINEL */}
+          <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+            {/* TOTAL REAL */}
+            <div
+              className="
+relative overflow-hidden
+p-6 rounded-3xl
+bg-gradient-to-br from-cyan-500/20 to-blue-600/10
+backdrop-blur-2xl
+border border-cyan-400/20
+shadow-2xl shadow-cyan-500/10
+"
+            >
+              <p className="text-sm text-cyan-100/70 uppercase tracking-widest">
+                Total de iniciativas
+              </p>
+              <p className="text-5xl font-black mt-3">{totalInitiatives}</p>
+            </div>
+
+            {/* CONCLUÍDAS */}
+            <div
+              className="
+relative overflow-hidden
+p-6 rounded-3xl
+bg-gradient-to-br from-emerald-500/20 to-green-600/10
+
+backdrop-blur-2xl
+border border-emerald-400/20
+shadow-2xl shadow-emerald-500/10
+
+"
+            >
+              <p className="text-sm md:text-sm text-emerald-600 uppercase tracking-widest">
+                Com evidência
+              </p>
+              <p className="text-5xl font-black mt-3 text-emerald-700">
+                {completedCount}
+              </p>
+            </div>
+
+            {/* FALTANTES */}
+            <div
+              className="
+relative overflow-hidden
+p-6 rounded-3xl
+bg-gradient-to-br from-amber-500/20 to-orange-600/10
+
+backdrop-blur-2xl
+border border-amber-400/20
+shadow-2xl shadow-amber-500/10
+
+"
+            >
+              <p className="text-xs md:text-sm text-amber-600 uppercase tracking-widest">
+                Faltantes
+              </p>
+              <p className="text-xl md:text-5xl font-black mt-3 text-amber-700">
+                {missingCount}
+              </p>
+            </div>
+
+            {/* % PROGRESSO */}
+            <div
+              className="
+relative overflow-hidden
+p-6 rounded-3xl
+bg-gradient-to-br from-violet-500/20 to-indigo-600/10
+
+backdrop-blur-2xl
+border border-violet-400/20
+shadow-2xl shadow-violet-500/10
+
+"
+            >
+              <p className="text-xs md:text-sm text-violet-600 uppercase tracking-widest">
+                Progresso
+              </p>
+              <p className="text-xl md:text-5xl font-black mt-3  text-violet-700">
+                {progress}%
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="space-y-4">
+          {factors.map((factor) => {
+            const isOpen = openFactor === factor.id;
+            const stats = getFactorStats(factor.id);
+            return (
+              <div
+                key={factor.id}
+                className="
+group
+rounded-3xl
+overflow-hidden
+transition-all duration-500
+border border-white/10
+bg-white/5
+backdrop-blur-xl
+shadow-2xl shadow-black/40
+hover:border-cyan-400/30
+hover:shadow-cyan-500/10
+"
+                style={{ borderColor: `${factor.color}30` }}
+              >
+                {/* FACTOR */}
+                <button
+                  onClick={() => setOpenFactor(isOpen ? null : factor.id)}
+                  className="
+w-full
+flex items-center justify-between
+p-6
+transition-all duration-300
+hover:bg-white/5
+"
+                  style={{ backgroundColor: `${factor.color}10` }}
+                >
+                  <div
+                    className="grid grid-cols-[auto_1fr_auto] items-center gap-2 font-semibold text-sm md:text-base w-full"
+                    style={{ color: factor.color }}
+                  >
+                    <span className="w-5 text-center">{factor.icon}</span>
+                    <span className="truncate">{factor.label}</span>
+
+                    <span
+                      className="
+text-xs
+px-4 py-2
+rounded-full
+bg-black/30
+border border-white/10
+backdrop-blur-xl
+whitespace-nowrap
+font-semibold
+"
+                    >
+                      {stats.done}/{stats.total}
+                    </span>
+                  </div>
+
+                  {isOpen ? (
+                    <ChevronDown size={18} style={{ color: factor.color }} />
+                  ) : (
+                    <ChevronRight size={18} style={{ color: factor.color }} />
+                  )}
+                </button>
+
+                {/* SUBITEMS */}
+                {isOpen && (
+                  <div className="p-3 md:p-5 space-y-3 md:space-y-4 bg-white">
+                    {factor.subitems.map((sub) => {
+                      const subOpen = openSub === sub.id;
+
+                      return (
+                        <div
+                          key={sub.id}
+                          className="border rounded-lg overflow-hidden"
+                          style={{ borderColor: `${factor.color}25` }}
                         >
-                          <span className="font-medium text-slate-700">
-                            {sub.label}
-                          </span>
-
-                          {subOpen ? (
-                            <ChevronDown
-                              size={16}
-                              style={{ color: factor.color }}
-                            />
-                          ) : (
-                            <ChevronRight
-                              size={16}
-                              style={{ color: factor.color }}
-                            />
-                          )}
-                        </button>
-
-                        {/* OBJECTIVES */}
-                        {subOpen && (
-                          <div
-                            className="p-4 space-y-3"
-                            style={{ backgroundColor: `${factor.color}05` }}
+                          {/* SUB HEADER */}
+                          <button
+                            onClick={() => setOpenSub(subOpen ? null : sub.id)}
+                            className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition"
                           >
-                            {sub.objectives?.map((obj) => {
-                              const objOpen = openObj === obj.title;
+                            <span className="font-medium text-slate-700">
+                              {sub.label}
+                            </span>
 
-                              return (
-                                <div key={obj.title}>
-                                  {/* OBJECTIVE HEADER */}
-                                  <button
-                                    onClick={() =>
-                                      setOpenObj(objOpen ? null : obj.title)
-                                    }
-                                    className="w-full flex items-center justify-between text-sm font-medium py-3"
-                                    style={{ color: factor.color }}
-                                  >
-                                    {/* 🔵  */}
-                                    <div className="flex items-center gap-2">
-                                      <span
-                                        className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                                        style={{
-                                          backgroundColor: factor.color,
-                                        }}
-                                      />
-                                      <span>{obj.title}</span>
-                                    </div>
+                            {subOpen ? (
+                              <ChevronDown
+                                size={16}
+                                style={{ color: factor.color }}
+                              />
+                            ) : (
+                              <ChevronRight
+                                size={16}
+                                style={{ color: factor.color }}
+                              />
+                            )}
+                          </button>
 
-                                    {objOpen ? (
-                                      <ChevronDown size={14} />
-                                    ) : (
-                                      <ChevronRight size={14} />
-                                    )}
-                                  </button>
+                          {/* OBJECTIVES */}
+                          {subOpen && (
+                            <div
+                              className="p-4 space-y-3"
+                              style={{ backgroundColor: `${factor.color}05` }}
+                            >
+                              {sub.objectives?.map((obj) => {
+                                const objOpen = openObj === obj.title;
 
-                                  {/* INITIATIVES */}
-                                  {objOpen && (
-                                    <div className="space-y-2 mt-2">
-                                      {obj.initiatives?.map((init) => {
-                                        const done =
-                                          completedMap?.[init.id] &&
-                                          completedMap[init.id] !== null
-                                            ? completedMap[init.id].completed
-                                            : false;
-                                        return (
-                                          <div
-                                            key={init.id}
-                                            className={`flex items-start gap-3 p-3 md:p-3 rounded-lg border transition cursor-pointer
-${done ? "bg-emerald-50 border-emerald-300" : "bg-white border-slate-200"}`}
-                                          >
-                                            {/* CHECKBOX */}
+                                return (
+                                  <div key={obj.title}>
+                                    {/* OBJECTIVE HEADER */}
+                                    <button
+                                      onClick={() =>
+                                        setOpenObj(objOpen ? null : obj.title)
+                                      }
+                                      className="w-full flex items-center justify-between text-sm font-medium py-3"
+                                      style={{ color: factor.color }}
+                                    >
+                                      {/* 🔵  */}
+                                      <div className="flex items-center gap-2">
+                                        <span
+                                          className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                                          style={{
+                                            backgroundColor: factor.color,
+                                          }}
+                                        />
+                                        <span>{obj.title}</span>
+                                      </div>
+
+                                      {objOpen ? (
+                                        <ChevronDown size={14} />
+                                      ) : (
+                                        <ChevronRight size={14} />
+                                      )}
+                                    </button>
+
+                                    {/* INITIATIVES */}
+                                    {objOpen && (
+                                      <div className="space-y-2 mt-2">
+                                        {obj.initiatives?.map((init) => {
+                                          const done =
+                                            completedMap?.[init.id] &&
+                                            completedMap[init.id] !== null
+                                              ? completedMap[init.id].completed
+                                              : false;
+                                          return (
                                             <div
-                                              onClick={() =>
-                                                handleToggle(init.id, !done)
-                                              }
-                                              className="w-6 h-6 md:w-5 md:h-5 mt-1 flex items-center justify-center rounded-md border flex-shrink-0"
-                                              style={{
-                                                backgroundColor: done
-                                                  ? factor.color
-                                                  : "transparent",
-                                                borderColor: done
-                                                  ? factor.color
-                                                  : "#cbd5e1",
-                                              }}
+                                              key={init.id}
+                                              className={`flex items-start gap-3 p-3 md:p-3 rounded-lg border transition cursor-pointer
+${
+  done
+    ? "bg-emerald-500/10 border-emerald-400/20"
+    : "bg-white/[0.03] border-white/10"
+}`}
                                             >
-                                              {done && (
-                                                <Check
-                                                  size={14}
-                                                  className="text-white"
-                                                />
-                                              )}
-                                            </div>
-
-                                            {/* TEXTO + OBSERVAÇÃO */}
-                                            <div className="flex-1">
+                                              {/* CHECKBOX */}
                                               <div
-                                                className={`font-medium transition ${
-                                                  done ? "line-through" : ""
-                                                }`}
+                                                onClick={() =>
+                                                  handleToggle(init.id, !done)
+                                                }
+                                                className="
+w-6 h-6
+mt-1
+flex items-center justify-center
+rounded-xl
+border
+flex-shrink-0
+transition-all duration-300
+shadow-lg
+"
                                                 style={{
-                                                  color: done
+                                                  backgroundColor: done
                                                     ? factor.color
-                                                    : "#1f2937",
+                                                    : "transparent",
+                                                  borderColor: done
+                                                    ? factor.color
+                                                    : "#cbd5e1",
                                                 }}
                                               >
-                                                {init.title}
+                                                {done && (
+                                                  <Check
+                                                    size={14}
+                                                    className="text-white"
+                                                  />
+                                                )}
                                               </div>
 
-                                              {/* 📝 OBSERVAÇÃO  */}
-                                              <textarea
-                                                value={
-                                                  completedMap[init.id]
-                                                    ?.observation || ""
-                                                }
-                                                placeholder="Adicionar observação..."
-                                                onChange={(e) =>
-                                                  setCompletedMap((prev) => ({
-                                                    ...prev,
-                                                    [init.id]: {
-                                                      ...prev[init.id],
-                                                      observation:
-                                                        e.target.value,
-                                                    },
-                                                  }))
-                                                }
-                                                onBlur={() =>
-                                                  handleToggle(
-                                                    init.id,
-                                                    done,
+                                              {/* TEXTO + OBSERVAÇÃO */}
+                                              <div className="flex-1">
+                                                <div
+                                                  className={`font-medium transition ${
+                                                    done ? "line-through" : ""
+                                                  }`}
+                                                  style={{
+                                                    color: done
+                                                      ? factor.color
+                                                      : "#1f2937",
+                                                  }}
+                                                >
+                                                  {init.title}
+                                                </div>
+
+                                                {/* 📝 OBSERVAÇÃO  */}
+                                                <textarea
+                                                  value={
                                                     completedMap[init.id]
-                                                      ?.observation,
-                                                  )
-                                                }
-                                                className="mt-2 w-full text-xs md:text-sm p-2 rounded-md border border-slate-200 
+                                                      ?.observation || ""
+                                                  }
+                                                  placeholder="Adicionar observação..."
+                                                  onChange={(e) =>
+                                                    setCompletedMap((prev) => ({
+                                                      ...prev,
+                                                      [init.id]: {
+                                                        ...prev[init.id],
+                                                        observation:
+                                                          e.target.value,
+                                                      },
+                                                    }))
+                                                  }
+                                                  onBlur={() =>
+                                                    handleToggle(
+                                                      init.id,
+                                                      done,
+                                                      completedMap[init.id]
+                                                        ?.observation,
+                                                    )
+                                                  }
+                                                  className="mt-2 w-full text-xs md:text-sm p-2 rounded-md border border-slate-200 
 focus:outline-none focus:ring-2 focus:ring-slate-300
 text-slate-700 bg-white"
-                                              />
-                                              {/* 🔗 LINK */}
-                                              <input
-                                                type="text"
-                                                value={
-                                                  completedMap[init.id]?.link ||
-                                                  ""
-                                                }
-                                                placeholder="Adicionar link de arquivos..."
-                                                onChange={(e) =>
-                                                  setCompletedMap((prev) => ({
-                                                    ...prev,
-                                                    [init.id]: {
-                                                      ...prev[init.id],
-                                                      link: e.target.value,
-                                                    },
-                                                  }))
-                                                }
-                                                onBlur={() =>
-                                                  handleToggle(
-                                                    init.id,
-                                                    done,
+                                                />
+                                                {/* 🔗 LINK */}
+                                                <input
+                                                  type="text"
+                                                  value={
                                                     completedMap[init.id]
-                                                      ?.observation,
-                                                    completedMap[init.id]?.link,
-                                                  )
-                                                }
-                                                className="mt-2 w-full text-xs md:text-sm p-2 rounded-md border border-slate-200 
+                                                      ?.link || ""
+                                                  }
+                                                  placeholder="Adicionar link de arquivos..."
+                                                  onChange={(e) =>
+                                                    setCompletedMap((prev) => ({
+                                                      ...prev,
+                                                      [init.id]: {
+                                                        ...prev[init.id],
+                                                        link: e.target.value,
+                                                      },
+                                                    }))
+                                                  }
+                                                  onBlur={() =>
+                                                    handleToggle(
+                                                      init.id,
+                                                      done,
+                                                      completedMap[init.id]
+                                                        ?.observation,
+                                                      completedMap[init.id]
+                                                        ?.link,
+                                                    )
+                                                  }
+                                                  className="mt-2 w-full text-xs md:text-sm p-2 rounded-md border border-slate-200 
 focus:outline-none focus:ring-2 focus:ring-slate-300
 text-slate-700 bg-white"
-                                              />
+                                                />
+                                              </div>
                                             </div>
-                                          </div>
-                                        );
-                                      })}
-                                    </div>
-                                  )}
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          );
-        })}
+                                          );
+                                        })}
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
+      {/* FOOTER */}
+      <footer
+        className="
+w-full
+mt-20
+border-t border-white/10
+bg-gradient-to-b from-[#020617] to-black
+relative
+overflow-hidden
+"
+      >
+        {/* EFEITOS */}
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-cyan-500/10 blur-3xl rounded-full pointer-events-none" />
+
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-500/10 blur-3xl rounded-full pointer-events-none" />
+
+        <div
+          className="
+relative z-10
+max-w-7xl
+mx-auto
+px-4 sm:px-6 md:px-8 xl:px-10
+py-10
+"
+        >
+          {/* LINHA PRINCIPAL */}
+          <div
+            className="
+flex
+flex-col
+lg:flex-row
+lg:items-center
+lg:justify-between
+gap-8
+"
+          >
+            {/* ESQUERDA */}
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" />
+
+                <h3
+                  className="
+text-2xl
+font-black
+bg-gradient-to-r
+from-cyan-300
+to-blue-500
+bg-clip-text
+text-transparent
+"
+                >
+                  Mapa Estratégico Dashboard
+                </h3>
+              </div>
+
+              <p className="text-slate-400 max-w-xl text-sm leading-relaxed">
+                Plataforma administrativa para acompanhamento estratégico,
+                iniciativas, evidências e progresso institucional.
+              </p>
+            </div>
+
+            {/* DIREITA */}
+            <div
+              className="
+grid
+grid-cols-2
+sm:grid-cols-3
+gap-5
+text-sm
+"
+            >
+              <div>
+                <p className="text-slate-500 uppercase tracking-widest text-xs mb-2">
+                  Iniciativas
+                </p>
+
+                <h4 className="text-white font-bold text-2xl">
+                  {totalInitiatives}
+                </h4>
+              </div>
+
+              <div>
+                <p className="text-slate-500 uppercase tracking-widest text-xs mb-2">
+                  Concluídas
+                </p>
+
+                <h4 className="text-emerald-400 font-bold text-2xl">
+                  {completedCount}
+                </h4>
+              </div>
+
+              <div>
+                <p className="text-slate-500 uppercase tracking-widest text-xs mb-2">
+                  Progresso
+                </p>
+
+                <h4 className="text-cyan-400 font-bold text-2xl">
+                  {progress}%
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          {/* LINHA INFERIOR */}
+          <div
+            className="
+mt-10
+pt-6
+border-t border-white/10
+flex
+flex-col
+md:flex-row
+items-center
+justify-between
+gap-4
+"
+          >
+            <p className="text-slate-500 text-sm text-center md:text-left">
+              © 2026 Mapa Estratégico Dashboard — Todos os direitos reservados.
+            </p>
+
+            <div className="flex items-center gap-3">
+              <div className="px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 text-xs uppercase tracking-widest">
+                Sistema Online
+              </div>
+
+              <div className="px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-300 text-xs uppercase tracking-widest">
+                Admin
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
