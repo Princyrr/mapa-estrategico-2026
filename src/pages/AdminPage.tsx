@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
+import iconlogo from "../assets/iconlogo.png";
+import sairIcon from "../assets/sair.png";
 import { factors } from "../data/strategicMap";
-import { ChevronDown, ChevronRight, Check } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  Check,
+  Target,
+  CheckCircle2,
+  Clock3,
+  TrendingUp,
+} from "lucide-react";
 import { API_URL } from "../config";
 import { useNavigate } from "react-router-dom";
-import banner1 from "../assets/banner1.gif";
 
 interface InitiativeStatus {
   initiativeId: string;
@@ -138,23 +147,94 @@ export default function AdminPage() {
       : 0;
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white">
+    <div
+      className="
+    relative
+    min-h-screen
+    overflow-hidden
+    text-white
+    bg-gradient-to-br
+    from-[#0b152e]
+    via-[#08183f]
+    to-[#0c1a37]
+  "
+    >
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* GRID */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: `
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+    `,
+            backgroundSize: "50px 50px",
+          }}
+        />
+
+        {/* glow azul */}
+        <div
+          className="
+      absolute
+      top-[-200px]
+      left-[-200px]
+      w-[500px]
+      h-[500px]
+      rounded-full
+      bg-cyan-500/10
+      blur-3xl
+    "
+        />
+
+        {/* glow roxo */}
+        <div
+          className="
+      absolute
+      bottom-[-200px]
+      right-[-200px]
+      w-[500px]
+      h-[500px]
+      rounded-full
+      bg-violet-500/10
+      blur-3xl
+    "
+        />
+      </div>
       <div className="max-w-7xl mx-auto px-4 py-5 sm:px-6 md:px-8 xl:px-10">
         {/* HEADER */}
         <div className="mb-12 relative">
           <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 xl:gap-10">
             {/* TITULOS */}
             <div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/20 bg-cyan-500/10 backdrop-blur-xl mb-5">
+              {/* TAG SUPERIOR */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/20 bg-cyan-500/10 backdrop-blur-xl mb-6">
                 <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
 
-                <span className="text-xs uppercase tracking-[0.25em] text-cyan-200 font-semibold">
+                <span className="text-xs uppercase tracking-[0.20em] text-cyan-200 font-semibold">
                   Mapa Estratégico Dashboard
                 </span>
               </div>
 
-              <h1
-                className="
+              {/* LOGO + TITULO */}
+              <div className="flex items-center gap-6 sm:gap-8">
+                {/* LOGO */}
+                <img
+                  src={iconlogo}
+                  alt="Logo"
+                  className="
+w-24 h-24
+sm:w-32 sm:h-32
+md:w-40 md:h-40
+object-contain
+drop-shadow-[0_0_35px_rgba(34,211,238,0.35)]
+flex-shrink-0
+"
+                />
+
+                {/* TITULO */}
+                <div>
+                  <h1
+                    className="
 text-4xl
 sm:text-5xl
 md:text-6xl
@@ -162,18 +242,20 @@ xl:text-7xl
 font-black
 leading-none
 tracking-tight
-bg-gradient-to-r
-from-blue-600
-via-cyan-500
-to-blue-500
 bg-clip-text
 text-transparent
 "
-              >
-                Painel
-                <br />
-                Administrativo
-              </h1>
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(90deg, #0c73ba, #34d399)",
+                    }}
+                  >
+                    Painel
+                    <br />
+                    Administrativo
+                  </h1>
+                </div>
+              </div>
             </div>
 
             {/* BOTÃO */}
@@ -181,6 +263,7 @@ text-transparent
               <button
                 onClick={handleLogout}
                 className="
+group
 w-full sm:w-auto
 px-5 py-3
 rounded-2xl
@@ -194,34 +277,25 @@ hover:text-white
 transition-all duration-300
 shadow-2xl shadow-black/40
 font-medium
+
+flex items-center gap-3
 "
               >
-                Sair do painel
+                <img
+                  src={sairIcon}
+                  alt="Sair"
+                  className="
+w-5 h-5
+object-contain
+opacity-80
+group-hover:opacity-100
+transition
+"
+                />
+
+                <span>Sair </span>
               </button>
             </div>
-            <img
-              src={banner1}
-              alt="Banner"
-              className="
-hidden lg:block
-
-absolute
-top-[40px]
-right-[200px]
-
-w-[180px]
-sm:w-[240px]
-xl:w-[300px]
-
-object-contain
-pointer-events-none
-select-none
-
-drop-shadow-[0_0_50px_rgba(34,211,238,0.35)]
-
-z-20
-"
-            />
           </div>
         </div>
 
@@ -255,17 +329,11 @@ overflow-hidden
                 Indicadores estratégicos e progresso geral do painel.
               </p>
             </div>
-
-            <div className="px-4 py-2 rounded-2xl bg-cyan-500/10 border border-cyan-400/20 backdrop-blur-xl">
-              <span className="text-cyan-200 text-sm font-medium">
-                {progress}% de progresso geral
-              </span>
-            </div>
           </div>
 
           {/* MINI PAINEL */}
           <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-            {/* TOTAL REAL */}
+            {/* TOTAL */}
             <div
               className="
 relative overflow-hidden
@@ -276,10 +344,20 @@ border border-cyan-400/20
 shadow-2xl shadow-cyan-500/10
 "
             >
-              <p className="text-sm text-cyan-100/70 uppercase tracking-widest">
-                Total de iniciativas
-              </p>
-              <p className="text-5xl font-black mt-3">{totalInitiatives}</p>
+              {/* ICON */}
+              <div className="absolute top-4 right-4 opacity-20">
+                <Target size={30} className="text-cyan-300" />
+              </div>
+
+              <div className="relative z-10">
+                <p className="text-sm text-cyan-100/70 uppercase tracking-widest">
+                  Total de iniciativas
+                </p>
+
+                <p className="text-5xl font-black mt-3 text-cyan-100">
+                  {totalInitiatives}
+                </p>
+              </div>
             </div>
 
             {/* CONCLUÍDAS */}
@@ -288,19 +366,24 @@ shadow-2xl shadow-cyan-500/10
 relative overflow-hidden
 p-6 rounded-3xl
 bg-gradient-to-br from-emerald-500/20 to-green-600/10
-
 backdrop-blur-2xl
 border border-emerald-400/20
 shadow-2xl shadow-emerald-500/10
-
 "
             >
-              <p className="text-sm md:text-sm text-emerald-600 uppercase tracking-widest">
-                Com evidência
-              </p>
-              <p className="text-5xl font-black mt-3 text-emerald-700">
-                {completedCount}
-              </p>
+              <div className="absolute top-4 right-4 opacity-20">
+                <CheckCircle2 size={30} className="text-emerald-300" />
+              </div>
+
+              <div className="relative z-10">
+                <p className="text-sm text-emerald-200 uppercase tracking-widest">
+                  Com evidência
+                </p>
+
+                <p className="text-5xl font-black mt-3 text-emerald-100">
+                  {completedCount}
+                </p>
+              </div>
             </div>
 
             {/* FALTANTES */}
@@ -309,40 +392,50 @@ shadow-2xl shadow-emerald-500/10
 relative overflow-hidden
 p-6 rounded-3xl
 bg-gradient-to-br from-amber-500/20 to-orange-600/10
-
 backdrop-blur-2xl
 border border-amber-400/20
 shadow-2xl shadow-amber-500/10
-
 "
             >
-              <p className="text-xs md:text-sm text-amber-600 uppercase tracking-widest">
-                Faltantes
-              </p>
-              <p className="text-xl md:text-5xl font-black mt-3 text-amber-700">
-                {missingCount}
-              </p>
+              <div className="absolute top-4 right-4 opacity-20">
+                <Clock3 size={30} className="text-amber-300" />
+              </div>
+
+              <div className="relative z-10">
+                <p className="text-xs md:text-sm text-amber-200 uppercase tracking-widest">
+                  Faltantes
+                </p>
+
+                <p className="text-xl md:text-5xl font-black mt-3 text-amber-100">
+                  {missingCount}
+                </p>
+              </div>
             </div>
 
-            {/* % PROGRESSO */}
+            {/* PROGRESSO */}
             <div
               className="
 relative overflow-hidden
 p-6 rounded-3xl
 bg-gradient-to-br from-violet-500/20 to-indigo-600/10
-
 backdrop-blur-2xl
 border border-violet-400/20
 shadow-2xl shadow-violet-500/10
-
 "
             >
-              <p className="text-xs md:text-sm text-violet-600 uppercase tracking-widest">
-                Progresso
-              </p>
-              <p className="text-xl md:text-5xl font-black mt-3  text-violet-700">
-                {progress}%
-              </p>
+              <div className="absolute top-4 right-4 opacity-20">
+                <TrendingUp size={30} className="text-violet-300" />
+              </div>
+
+              <div className="relative z-10">
+                <p className="text-xs md:text-sm text-violet-200 uppercase tracking-widest">
+                  Progresso
+                </p>
+
+                <p className="text-xl md:text-5xl font-black mt-3 text-violet-100">
+                  {progress}%
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -666,18 +759,18 @@ gap-8
             {/* ESQUERDA */}
             <div>
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" />
+                <div className="w-3 h-3 rounded-full bg-[#0c73ba] animate-pulse" />
 
                 <h3
                   className="
 text-2xl
 font-black
-bg-gradient-to-r
-from-cyan-300
-to-blue-500
 bg-clip-text
 text-transparent
 "
+                  style={{
+                    backgroundImage: "linear-gradient(90deg, #0c73ba, #34d399)",
+                  }}
                 >
                   Mapa Estratégico Dashboard
                 </h3>
