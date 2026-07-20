@@ -9,7 +9,6 @@ import {
   Target,
   CheckCircle2,
   Clock3,
-  TrendingUp,
 } from "lucide-react";
 import { API_URL } from "../config";
 import { useNavigate } from "react-router-dom";
@@ -200,7 +199,7 @@ export default function AdminPage() {
     "
         />
       </div>
-      <div className="max-w-7xl mx-auto px-4 py-5 sm:px-6 md:px-8 xl:px-10">
+      <div className="max-w-[1600px] mx-auto px-4 py-5 sm:px-6 md:px-8 xl:px-10">
         {/* HEADER */}
         <div className="mb-12 relative">
           <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 xl:gap-10">
@@ -236,9 +235,9 @@ flex-shrink-0
                   <h1
                     className="
 text-4xl
-sm:text-5xl
-md:text-6xl
-xl:text-7xl
+sm:text-4xl
+md:text-5xl
+xl:text-6xl
 font-black
 leading-none
 tracking-tight
@@ -332,109 +331,271 @@ overflow-hidden
           </div>
 
           {/* MINI PAINEL */}
-          <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-            {/* TOTAL */}
-            <div
-              className="
+          <div className="relative z-10">
+            {/* CARDS */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 xl:pr-[340px]">
+              {/* TOTAL */}
+              <div
+                className="
 relative overflow-hidden
-p-6 rounded-3xl
+p-4 sm:p-6
+rounded-3xl
 bg-gradient-to-br from-cyan-500/20 to-blue-600/10
 backdrop-blur-2xl
 border border-cyan-400/20
 shadow-2xl shadow-cyan-500/10
+min-h-[140px]
+flex items-center
 "
-            >
-              {/* ICON */}
-              <div className="absolute top-4 right-4 opacity-20">
-                <Target size={30} className="text-cyan-300" />
+              >
+                {/* ICON */}
+                <div className="absolute top-4 right-4 opacity-20">
+                  <Target className="w-6 h-6 sm:w-8 sm:h-8 text-cyan-300" />
+                </div>
+
+                <div className="relative z-10">
+                  <p
+                    className="
+text-[10px]
+sm:text-xs
+md:text-sm
+text-cyan-100/70
+uppercase
+tracking-[0.25em]
+mb-2
+"
+                  >
+                    Total de iniciativas
+                  </p>
+
+                  <p
+                    className="
+text-3xl
+sm:text-4xl
+md:text-5xl
+font-black
+leading-none
+text-cyan-100
+"
+                  >
+                    {totalInitiatives}
+                  </p>
+                </div>
               </div>
 
-              <div className="relative z-10">
-                <p className="text-sm text-cyan-100/70 uppercase tracking-widest">
-                  Total de iniciativas
-                </p>
-
-                <p className="text-5xl font-black mt-3 text-cyan-100">
-                  {totalInitiatives}
-                </p>
-              </div>
-            </div>
-
-            {/* CONCLUÍDAS */}
-            <div
-              className="
+              {/* CONCLUÍDAS */}
+              <div
+                className="
 relative overflow-hidden
-p-6 rounded-3xl
+p-4 sm:p-6
+rounded-3xl
 bg-gradient-to-br from-emerald-500/20 to-green-600/10
 backdrop-blur-2xl
 border border-emerald-400/20
 shadow-2xl shadow-emerald-500/10
+min-h-[140px]
+flex items-center
 "
-            >
-              <div className="absolute top-4 right-4 opacity-20">
-                <CheckCircle2 size={30} className="text-emerald-300" />
+              >
+                {/* ICON */}
+                <div className="absolute top-4 right-4 opacity-20">
+                  <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 text-emerald-300" />
+                </div>
+
+                <div className="relative z-10">
+                  <p
+                    className="
+text-[10px]
+sm:text-xs
+md:text-sm
+text-emerald-100/70
+uppercase
+tracking-[0.25em]
+mb-2
+"
+                  >
+                    Com evidência
+                  </p>
+
+                  <p
+                    className="
+text-3xl
+sm:text-4xl
+md:text-5xl
+font-black
+leading-none
+text-emerald-100
+"
+                  >
+                    {completedCount}
+                  </p>
+                </div>
               </div>
 
-              <div className="relative z-10">
-                <p className="text-sm text-emerald-200 uppercase tracking-widest">
-                  Com evidência
-                </p>
-
-                <p className="text-5xl font-black mt-3 text-emerald-100">
-                  {completedCount}
-                </p>
-              </div>
-            </div>
-
-            {/* FALTANTES */}
-            <div
-              className="
+              {/* FALTANTES */}
+              <div
+                className="
 relative overflow-hidden
-p-6 rounded-3xl
+p-4 sm:p-6
+rounded-3xl
 bg-gradient-to-br from-amber-500/20 to-orange-600/10
 backdrop-blur-2xl
 border border-amber-400/20
 shadow-2xl shadow-amber-500/10
+min-h-[140px]
+flex items-center
 "
-            >
-              <div className="absolute top-4 right-4 opacity-20">
-                <Clock3 size={30} className="text-amber-300" />
-              </div>
+              >
+                {/* ICON */}
+                <div className="absolute top-4 right-4 opacity-20">
+                  <Clock3 className="w-6 h-6 sm:w-8 sm:h-8 text-amber-300" />
+                </div>
 
-              <div className="relative z-10">
-                <p className="text-xs md:text-sm text-amber-200 uppercase tracking-widest">
-                  Faltantes
-                </p>
+                <div className="relative z-10">
+                  <p
+                    className="
+text-[10px]
+sm:text-xs
+md:text-sm
+text-amber-100/70
+uppercase
+tracking-[0.25em]
+mb-2
+"
+                  >
+                    Faltantes
+                  </p>
 
-                <p className="text-xl md:text-5xl font-black mt-3 text-amber-100">
-                  {missingCount}
-                </p>
+                  <p
+                    className="
+text-3xl
+sm:text-4xl
+md:text-5xl
+font-black
+leading-none
+text-amber-100
+"
+                  >
+                    {missingCount}
+                  </p>
+                </div>
               </div>
             </div>
-
             {/* PROGRESSO */}
             <div
               className="
-relative overflow-hidden
-p-6 rounded-3xl
-bg-gradient-to-br from-violet-500/20 to-indigo-600/10
-backdrop-blur-2xl
-border border-violet-400/20
-shadow-2xl shadow-violet-500/10
+relative
+mt-8
+
+xl:absolute
+xl:top-[-90px]
+xl:right-[-20px]
+xl:w-[320px]
+xl:mt-0
+
+flex flex-col items-center justify-center
 "
             >
-              <div className="absolute top-4 right-4 opacity-20">
-                <TrendingUp size={30} className="text-violet-300" />
-              </div>
+              {/* glow */}
+              <div className="absolute top-10 w-56 h-56 bg-violet-500/20 blur-3xl rounded-full pointer-events-none" />
 
-              <div className="relative z-10">
-                <p className="text-xs md:text-sm text-violet-200 uppercase tracking-widest">
+              <div className="relative z-10 w-full flex flex-col items-center">
+                <p
+                  className="
+text-[11px]
+sm:text-xs
+uppercase
+tracking-[0.35em]
+text-violet-300/80
+text-center
+mb-6
+font-semibold
+"
+                >
                   Progresso
                 </p>
 
-                <p className="text-xl md:text-5xl font-black mt-3 text-violet-100">
-                  {progress}%
-                </p>
+                <div className="flex items-center justify-center">
+                  <div className="relative w-36 h-36 sm:w-44 sm:h-44">
+                    {/* FUNDO DO CÍRCULO */}
+                    <div
+                      className="absolute inset-0 rounded-full"
+                      style={{
+                        background:
+                          "conic-gradient(from 220deg, rgba(255,255,255,0.08) 0deg, rgba(255,255,255,0.08) 260deg, transparent 260deg)",
+                      }}
+                    />
+
+                    <div
+                      className="absolute inset-0 rounded-full transition-all duration-700"
+                      style={{
+                        background: `conic-gradient(
+              from 220deg,
+              #8b5cf6 0deg,
+              #c084fc ${(progress / 100) * 260}deg,
+              transparent ${(progress / 100) * 260}deg
+            )`,
+                      }}
+                    />
+
+                    {/* MÁSCARA INTERNA */}
+                    <div className="absolute inset-[18px] rounded-full bg-[#0f172a]" />
+
+                    {/* TRAÇOS */}
+                    {[...Array(30)].map((_, i) => {
+                      const angle = 220 + i * 8.6;
+
+                      return (
+                        <div
+                          key={i}
+                          className="absolute left-1/2 top-1/2 origin-center"
+                          style={{
+                            transform: `rotate(${angle}deg)`,
+                          }}
+                        >
+                          <div
+                            className={`absolute w-[3px] h-3 rounded-full
+                  ${
+                    i < (progress / 100) * 30
+                      ? "bg-violet-300 shadow-[0_0_10px_rgba(192,132,252,0.9)]"
+                      : "bg-white/10"
+                  }
+                `}
+                            style={{
+                              transform: "translate(-50%, -78px)",
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
+
+                    {/* AGULHA */}
+                    <div
+                      className="absolute left-1/2 top-1/2 origin-bottom transition-all duration-700"
+                      style={{
+                        transform: `translate(-50%, -100%) rotate(${
+                          -140 + (progress / 100) * 260
+                        }deg)`,
+                      }}
+                    >
+                      <div className="w-[4px] h-16 rounded-full bg-gradient-to-t from-violet-500 to-fuchsia-300 shadow-[0_0_18px_rgba(192,132,252,0.9)]" />
+                    </div>
+
+                    {/* CENTRO */}
+                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-violet-300 shadow-[0_0_20px_rgba(192,132,252,1)] border-4 border-[#0f172a]" />
+
+                    {/* TEXTO */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <span className="text-3xl sm:text-4xl font-black text-violet-100">
+                        {progress}%
+                      </span>
+
+                      <span className="text-[10px] tracking-[0.3em] uppercase text-violet-300 mt-1">
+                        concluído
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -739,7 +900,7 @@ overflow-hidden
         <div
           className="
 relative z-10
-max-w-7xl
+max-w-[1600px]
 mx-auto
 px-4 sm:px-6 md:px-8 xl:px-10
 py-10

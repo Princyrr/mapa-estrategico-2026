@@ -176,8 +176,9 @@ export default function Hero() {
           className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto mb-12 leading-relaxed"
         >
           O caminho para a Nova Indústria brasileira — uma visão estratégica de
-          longo prazo com 8 fatores-chave, 32 temas prioritários e 247
-          iniciativas transformadoras.
+          longo prazo para o desenvolvimento e o crescimento da indústria
+          brasileira, com 8 fatores-chave, 32 temas prioritários, 96 objetivos e
+          342 iniciativas transformadoras.
         </motion.p>
 
         {/* stats */}
@@ -212,7 +213,7 @@ export default function Hero() {
             Explorar os Fatores-Chave
           </a>
           <a
-            href="https://drive.google.com/file/d/1VxegDw39GltsUIPOK2-3huU_kkUOOxvM/view?usp=drive_link"
+            href="https://drive.google.com/file/d/1Ow1wt-tVjaYVEY328hhaAV7DOUZqi3vb/view?usp=drive_link"
             className="text-slate-300 hover:text-white font-medium px-8 py-3.5 rounded-xl border border-slate-700 hover:border-slate-500 transition-colors text-base"
           >
             Diagramação
